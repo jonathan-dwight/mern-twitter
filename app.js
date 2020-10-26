@@ -6,6 +6,7 @@ const users = require("./routes/api/users");
 const tweets = require("./routes/api/tweets");
 const bodyParser = require('body-parser');
 const User = require("./models/User")
+const passport = require('passport');
 
 
 mongoose
@@ -18,14 +19,11 @@ app.use(bodyParser.json());
     
 //listening on any root
 app.get("/", (req, res) => {
-    const user = new User({
-        handle: "Jd",
-        email: "jd@aa.io",
-        password: "password"
-    })
-    user.save()
     res.send("Hello world")
 }) 
+
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 
 app.use("/api/users", users);
